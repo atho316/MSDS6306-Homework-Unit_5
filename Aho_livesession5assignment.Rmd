@@ -1,0 +1,88 @@
+---
+title: "Aho_livesession5assignment"
+author: "Andy Ho"
+date: "June 11, 2018"
+output: html_document
+---
+
+#### 1. Data Munging from yob2016.txt file
+  + A. Importing the file into R and assigning to object 'df'
+```{r}
+df <- read.table("yob2016.txt", sep = ';', header = FALSE)
+head(df)
+```
+  + B. Display the summary and structure of df
+```{r}
+str(df)
+summary(df)
+```
+  + C. Name with three y's in list
+```{r}
+names(df) <- c("First_Name", "Gender", "Frequency")
+head(df)
+grep("yyy$", df$First_Name, value = TRUE)
+```
+  + D. Remove 'Fionayyy' from the list
+```{r}
+remove <- c("Fionayyy")
+df2 <- df[! df$First_Name %in% remove,]
+grep("yyy$", df2$First_Name, value = TRUE)
+y2016 <- df2
+head(y2016)
+```
+
+####2. Data Merging
+  + A. Import yob2015.txt and store into object df
+```{r}
+df <- read.table("yob2015.txt", sep = ',', header = FALSE)
+y2015 <- df
+str(y2015)
+```
+
+  + B. Display the last ten rows of data frame.  All the names start with the letter Z, associated to male gender, and each have a frequency of 5.
+```{r}
+names(y2015) <- c("First_Name", "Gender", "Frequency")
+tail(y2015, 10)
+```
+
+  + C. Merging y2016 and y2015 by Name column.
+```{r}
+final <- merge(y2015, y2016, by=c("First_Name", "Gender"), all=TRUE)
+names(final) <- c("First_Name","Gender", "Freq_2015", "Freq_2016")
+any(is.na(final))
+colSums(is.na(final))
+final[is.na(final)]=0
+colSums(is.na(final))
+str(final)
+```
+
+####3. Utilizing 'final' object for the following
+  + A. Create new column called "Total" in final.  How many people were given popular names?
+```{r}
+final$Total <- 0
+head(final)
+final$Total <- final$Freq_2015 + final$Freq_2016
+cat ("Total number of people using popular names is", sum(final$Total), ".")
+```
+  + B. Sort the data by Total.  What are the top 10 most popular names?
+```{r}
+finalbytotal <- final[order(-final$Total),]
+head(finalbytotal, 10)
+```
+  + C. Top 10 Girl Names
+```{r}
+final_girl <- subset(finalbytotal, finalbytotal$Gender == "F")
+final_girl <- final_girl[order(-final_girl$Total),]
+head(final_girl, 10)
+```
+
+  + D. Top 10 girl names and totals in CSV file: "Top_10_Girl_Names.csv"
+```{r}
+final_girl_10 <- head(final_girl, 10)
+final_girl_10 <- final_girl_10[,c("First_Name","Gender","Total")]
+final_girl_10
+write.csv(final_girl_10, file = "Top_10_Girl_Names.csv", row.names = FALSE)
+```
+
+####4. Upload to Github
+  + URL: https://github.com/atho316/MSDS6306-Homework-Unit_5

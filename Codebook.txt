@@ -1,0 +1,45 @@
+---
+title: "codebook"
+author: "Andy Ho"
+date: "June 11, 2018"
+output: html_document
+---
+
+### Codebook Summary
+A client is expecting a baby soon.  Unable to make a decision on a name, we are hired to recommend popular names.  We are given two files containing raw data of first names, gender, and count for 2015 and 2016.  This document will provide information on the raw data, the variables, process of tidying the data, and the tidy data itself.  This was an observational study to provide the top 10 most popular female names from the totals of 2015 and 2016.
+
+### Files used for this task
+- yob2015.txt : This file contains names for both genders for 2015 and the frequency count for each and was provided by the client.
+- yob2016.txt : This file contains names for both genders for 2016 and the frequency count for each and was provided by the client.
+
+### Raw Data Stats
+	2015: Total Names - 33,063  |  3 Variables 
+	2016: Total Names - 32,689  |  3 Variables
+
+### Files generated for this task
+- Aho_livesession5assignment.Rmd : The R markdown containing the R code and results for each question in Unit 05 assignment.
+- Aho_livesession5assignment.html : The HTML result from the Rmd file.
+- Top_10_Girl_Names.csv : The list of top 10 girl names to provide to our client. 
+
+### Variables and tidying data
+In both yob2015.tx and yob2016.txt, the files were untidy.  There was no variable names and had one duplicate misspelt.  
+
+Untidy Variable  |   Tidy Variable   |  Meaning 
+        V1              First_Name        First name
+        V2              Gender            Sex of name   
+        V3              Frequency         Count of each name
+  
+After merging the files, here were the new variables:
+	
+	Variable		Meaning
+	First_Name		First name
+	Gender			Sex of name
+	Freq_2015		Count of each name in 2015
+	Freq_2016		Count of each name in 2016
+
+
+
+
+
+
+    
